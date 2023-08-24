@@ -1,7 +1,7 @@
 
 <h1 align="center">
   <br>
-  <img src="https://o.remove.bg/downloads/8627e5f8-24fd-4f91-b50f-5edd850290e9/VYUOzavSHKjBxTKAa4LA_cover-removebg-preview.png" alt="Imagem generica python, chrome, selenium" width="300"></a>
+<!--   <img src="https://o.remove.bg/downloads/8627e5f8-24fd-4f91-b50f-5edd850290e9/VYUOzavSHKjBxTKAa4LA_cover-removebg-preview.png" alt="Imagem generica python, chrome, selenium" width="300"></a> -->
   <br>
  Automação Python Para o Site Vital Source 
   <br>
