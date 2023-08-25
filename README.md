@@ -33,7 +33,7 @@ A automação deve entrar e logar no site, baixar um arquivo em CSV, formata-lo 
 >_O Dotenv é uma biblioteca Python poderosa e fácil de usar para carregar variáveis de ambiente em projetos. Com ele, você pode otimizar as configurações do seu projeto, mantendo informações sensíveis fora do código fonte._ - [Documentação](https://www.npmjs.com/package/dotenv)
 
 - **Os**<br>
->_O módulo os em Python é uma biblioteca padrão muito útil quando se trata de interagir com o sistema operacional. Ele nos fornece uma série de funcionalidades para executar ações específicas, como navegar por diretórios, criar novos diretórios, executar comandos no terminal e obter informações do sistema._ - [Documentação](https://docs.python.org/pt-br/3/library/os.html)
+>_O módulo OS em Python é uma biblioteca padrão muito útil quando se trata de interagir com o sistema operacional. Ele nos fornece uma série de funcionalidades para executar ações específicas, como navegar por diretórios, criar novos diretórios, executar comandos no terminal e obter informações do sistema._ - [Documentação](https://docs.python.org/pt-br/3/library/os.html)
 
 - **Pandas**
 >_Pandas é uma biblioteca para Ciência de Dados de código aberto (open source), construída sobre a linguagem Python, e que providencia uma abordagem rápida e flexível, com estruturas robustas para se trabalhar com dados relacionais (ou rotulados), e tudo isso de maneira simples e intuitiva._ - [Documentação](https://pandas.pydata.org/docs/)
