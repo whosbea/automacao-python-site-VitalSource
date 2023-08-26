@@ -2,6 +2,7 @@ from selenium import webdriver
 from dotenv import load_dotenv
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 import os
 import pandas as pd
 import openpyxl
@@ -20,12 +21,15 @@ EMAIL = os.getenv("usuarioEmail")
 SENHAEMAIL = os.getenv("senhaEmail")
 DESTINATARIO = os.getenv("destinatario")
 
-navegador = webdriver.Firefox()
-navegador.get("https://analyze.vitalsource.com/auth/vst/login")
 
-# esperar o carregamento
-navegador.implicitly_wait(5)
-wait = WebDriverWait(navegador, 5)
+navegador = webdriver.Firefox()
+wait = WebDriverWait(navegador, 10)
+
+
+def iniciar_navegador():
+    navegador.get("https://analyze.vitalsource.com/auth/vst/login")
+    navegador.implicitly_wait(5)
+    return wait, navegador
 
 # iniciar o acesso
 
@@ -56,14 +60,10 @@ def abrir_vitalsource():
 def arquivo_csv():
     abrir_vitalsource()
     botao_download = wait.until(EC.visibility_of_element_located(
-        ("CLASS_NAME", ".export-link.export-link-right.trends-export-button")))
+        (By.CSS_SELECTOR, "button.trends-export-button:nth-child(2)")))
     botao_download.click()
-# espera o dowload do arquivo .csv
     navegador.implicitly_wait(10)
-# obtem a pasta de dowload do windows
     pasta_downloads = os.path.join(os.path.expanduser("~"), "Downloads")
-
-# verificar se o arquivo csv ta na pasta
     caminho_arquivo_csv = None
     for nome_arquivo in os.listdir(pasta_downloads):
         if nome_arquivo.endswith(".csv"):
@@ -71,19 +71,11 @@ def arquivo_csv():
             break
     if caminho_arquivo_csv:
         df = pd.read_csv(caminho_arquivo_csv)
-
-# caminho do novo arquivo
         caminho_arquivo_excel = os.path.join(
             pasta_downloads, "arquivoVitalSource.xlsx")
-
-# ciar arquivo excel a partir do df
         df.to_excel(caminho_arquivo_excel, index=False)
-
-# carrega o arquivo
         pasta_trabalho_excel = openpyxl.load_workbook(caminho_arquivo_excel)
         planilha = pasta_trabalho_excel.active
-
-# ajustar largura das colunas
         for coluna in planilha.columns:
             tamanho_maximo = 0
             nome_coluna = coluna[0].column_letter
@@ -95,8 +87,8 @@ def arquivo_csv():
                     pass
             largura_ajustada = (tamanho_maximo + 2) * 1.2
             planilha.column_dimensions[nome_coluna].width = largura_ajustada
-
         pasta_trabalho_excel.save(caminho_arquivo_excel)
+
 
 
 def enviar_email(caminho_arquivo_excel):
@@ -130,13 +122,16 @@ def enviar_email(caminho_arquivo_excel):
         print(f'Erro ao enviar o email: {e}')
 
 
-# iniciar o processo
-login()
-arquivo_csv()
-# caminho do arquivo excel
-caminho_arquivo_excel = os.path.join(os.path.expanduser("~"), "Downloads", "arquivoVitalSource.xlsx")
-enviar_email(caminho_arquivo_excel)
+if __name__ == "__main__":
+    iniciar_navegador()
+    login()
+    arquivo_csv()
+    
+    # caminho do arquivo excel
+    caminho_arquivo_excel = os.path.join(os.path.expanduser("~"), "Downloads", "arquivoVitalSource.xlsx")
+    enviar_email(caminho_arquivo_excel)
 
-print("terminou")
-# fecha o navegador
-navegador.quit()
+    print("terminou")
+    
+    # Fecha o navegador
+    navegador.quit()
